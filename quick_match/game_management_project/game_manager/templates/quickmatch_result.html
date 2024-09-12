@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>QuickMatch Result</h2>
+
+<p>{{ match.player1.name }} vs {{ match.player2.name }}</p>
+
+{% if match.winner %}
+    <h3>Winner: {{ match.winner.name }}</h3>
+    <p>Final Score: {{ match.player1_score }} - {{ match.player2_score }}</p>
+{% else %}
+    <p>The match is not completed yet.</p>
+    <a href="{% url 'play_pong' 'quick' match.id %}">Play Pong</a>
+{% endif %}
+
+<a href="{% url 'home' %}">Back to Home</a>
+{% endblock %}

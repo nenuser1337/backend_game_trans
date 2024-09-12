@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Tournaments</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Players</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tournament in tournaments %}
+        <tr>
+            <td>{{ tournament.name }}</td>
+            <td>{{ tournament.get_status }}</td>
+            <td>{{ tournament.players.count }}</td>
+            <td>
+                <a href="{% url 'tournament_detail' tournament.id %}">View</a>
+                {% if tournament.can_join %}
+                    <a href="{% url 'join_tournament' %}?tournament_id={{ tournament.id }}">Join</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'create_tournament' %}">Create New Tournament</a>
+{% endblock %}

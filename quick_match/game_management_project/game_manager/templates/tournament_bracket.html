@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ tournament.name }} - Tournament Bracket</h2>
+
+{% if tournament.is_concluded %}
+    <h3>Tournament Winner: {{ tournament.winner.name }}</h3>
+{% else %}
+    <h3>Current Round: {{ tournament.current_round }}</h3>
+    
+    {% for match in current_matches %}
+        <div class="match">
+            <p>{{ match.player1.name }} vs {% if match.player2 %}{{ match.player2.name }}{% else %}Bye{% endif %}</p>
+            {% if not match.winner and match.player2 %}
+                <a href="{% url 'play_pong' 'tournament' match.id %}" class="btn btn-primary">Play Match</a>
+            {% elif match.winner %}
+                <p>Winner: {{ match.winner.name }} ({{ match.player1_score }}-{{ match.player2_score }})</p>
+            {% else %}
+                <p>{{ match.player1.name }} advances (Bye)</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<a href="{% url 'tournament_detail' tournament.id %}" class="btn btn-secondary">Back to Tournament Details</a>
+<a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+{% endblock %}

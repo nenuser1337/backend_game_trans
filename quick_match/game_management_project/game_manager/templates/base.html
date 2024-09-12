@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Game Management System{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Game Management System</h1>
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'quickmatch_form' %}">Quick Match</a>
+            <a href="{% url 'create_tournament' %}">Create Tournament</a>
+            <a href="{% url 'join_tournament' %}">Join Tournament</a>
+            <a href="{% url 'match_history' %}">Match History</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Game Management System</p>
+    </footer>
+</body>
+</html>

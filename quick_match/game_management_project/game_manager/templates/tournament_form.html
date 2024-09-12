@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Create a New Tournament</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="tournament_name">Tournament Name:</label>
+        <input type="text" id="tournament_name" name="tournament_name" class="form-control" required>
+    </div>
+    
+    <div id="player-inputs">
+        <div class="form-group">
+            <label for="player_names_0">Player 1:</label>
+            <input type="text" name="player_names" id="player_names_0" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="player_names_1">Player 2:</label>
+            <input type="text" name="player_names" id="player_names_1" class="form-control" required>
+        </div>
+    </div>
+    
+    <button type="button" id="add-player" class="btn btn-secondary">Add Player</button>
+    <button type="submit" class="btn btn-primary">Create Tournament</button>
+</form>
+
+<script>
+    let playerCount = 2;
+    document.getElementById('add-player').addEventListener('click', function() {
+        playerCount++;
+        const playerInputs = document.getElementById('player-inputs');
+        const newInput = document.createElement('div');
+        newInput.className = 'form-group';
+        newInput.innerHTML = `
+            <label for="player_names_${playerCount - 1}">Player ${playerCount}:</label>
+            <input type="text" name="player_names" id="player_names_${playerCount - 1}" class="form-control" required>
+        `;
+        playerInputs.appendChild(newInput);
+    });
+</script>
+{% endblock %}

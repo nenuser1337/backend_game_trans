@@ -1,0 +1,22 @@
+<!-- game_manager/templates/tournament_created.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournament Created</title>
+</head>
+<body>
+    <h1>Tournament Created Successfully</h1>
+    <p>Tournament Name: {{ tournament.name }}</p>
+    <h2>Players:</h2>
+    <ul>
+        {% for player in tournament.players.all %}
+            <li>{{ player.name }}</li>
+        {% endfor %}
+    </ul>
+    <br>
+    <a href="{% url 'home' %}">Back to Home</a>
+</body>
+</html>

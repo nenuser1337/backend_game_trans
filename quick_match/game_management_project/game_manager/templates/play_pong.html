@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h2>Pong Game: {{ match.player1.name }} vs {{ match.player2.name }}</h2>
+
+<canvas id="pongCanvas" width="800" height="400" style="border:1px solid #000000;"></canvas>
+
+<div id="scoreBoard">
+    <p>{{ match.player1.name }}: <span id="player1Score">0</span></p>
+    <p>{{ match.player2.name }}: <span id="player2Score">0</span></p>
+</div>
+
+<div id="gameResult" style="display: none;">
+    <h3>Game Over!</h3>
+    <p>Winner: <span id="winnerName"></span></p>
+    <a href="{% if match_type == 'quick' %}{% url 'quickmatch_result' match.id %}{% else %}{% url 'tournament_bracket' match.tournament.id %}{% endif %}" class="btn btn-primary">Continue</a>
+</div>
+
+<script>
+    const matchType = "{{ match_type }}";
+    const matchId = {{ match.id }};
+</script>
+<script src="{% static 'js/pong.js' %}"></script>
+{% endblock %}

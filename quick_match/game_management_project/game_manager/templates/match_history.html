@@ -1,0 +1,72 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match History</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Match History</h1>
+    
+    <h2>Quick Matches</h2>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Players</th>
+            <th>Result</th>
+        </tr>
+        {% for match in quick_matches %}
+        <tr>
+            <td>{{ match.created_at|date:"Y-m-d H:i" }}</td>
+            <td>{{ match.player1.name }} vs {{ match.player2.name }}</td>
+            <td>{{ match.get_result_display }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">No quick matches played yet.</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Tournaments</h2>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        {% for tournament in tournaments %}
+        <tr>
+            <td>{{ tournament.created_at|date:"Y-m-d H:i" }}</td>
+            <td>{{ tournament.name }}</td>
+            <td>{{ tournament.get_result_summary }}</td>
+            <td><a href="{% url 'tournament_results' tournament.id %}">View Results</a></td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No tournaments created yet.</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <a href="{% url 'home' %}">Back to Home</a>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ tournament.name }}</h2>
+<p>Status: {{ tournament.get_status }}</p>
+<p>Players: {{ tournament.players.count }}</p>
+
+<h3>Participants:</h3>
+<ul>
+{% for player in tournament.players.all %}
+    <li>{{ player.name }}</li>
+{% endfor %}
+</ul>
+
+{% if tournament.can_join %}
+    <a href="{% url 'join_tournament' %}?tournament_id={{ tournament.id }}">Join Tournament</a>
+{% endif %}
+
+{% if not tournament.is_ongoing and not tournament.is_concluded %}
+    <form method="post" action="{% url 'start_tournament' tournament.id %}">
+        {% csrf_token %}
+        <button type="submit">Start Tournament</button>
+    </form>
+{% elif tournament.is_ongoing %}
+    <a href="{% url 'tournament_bracket' tournament.id %}">View Bracket</a>
+{% endif %}
+
+{% if matches %}
+    <h3>Matches:</h3>
+    {% for match in matches %}
+        <p>Round {{ match.round }}: {{ match.get_display_name }}</p>
+        {% if match.winner %}
+            <p>Winner: {{ match.winner.name }}</p>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<a href="{% url 'tournament_list' %}">Back to Tournament List</a>
+{% endblock %}

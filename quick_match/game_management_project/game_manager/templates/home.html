@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Welcome to the Game Management System</h1>
+<nav>
+    <ul>
+        <li><a href="{% url 'quickmatch_form' %}">Quick Match</a></li>
+        <li><a href="{% url 'tournament_list' %}">View Tournaments</a></li>
+        <li><a href="{% url 'create_tournament' %}">Create Tournament</a></li>
+        {% if show_history_link %}
+            <li><a href="{% url 'match_history' %}">Match History</a></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endblock %}
